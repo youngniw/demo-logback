@@ -55,8 +55,14 @@
 
     <!-- 로그를 DB에 저장 : 보안 취약점 때문에 DBAppender 를 지원하지 않음 -->
 
+    <!-- 루트 로깅 설정 -->
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
     </root>
+
+    <!-- controller 패키지의 로그 관련 설정 -->
+    <logger name="com.example.demologback.controller" level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE" />         <!-- 파일로도 출력 -->
+    </logger>
 </configuration>
