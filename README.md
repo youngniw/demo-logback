@@ -5,7 +5,7 @@
 
 <h3>- 간략한 실습 프로젝트 소개</h3>
 
-게시물의 추가, 조회, 수정, 삭제의 기능을 수행할 때의 로그를 파일과 콘솔 창에 출력하도록 구현
+게시물의 추가, 조회, 수정, 삭제의 기능을 수행할 때의 로그를 로그스태시, 파일, 그리고 콘솔 창에 출력하도록 구현
 
 <br/>
 <h3>- 스택</h3>
@@ -25,7 +25,7 @@
 - logback-spring.xml
 1. 루트
    - 레벨: INFO
-   - 출력 형식: 콘솔, logstash 저장
+   - 출력 형식: 콘솔, logstash를 통한 저장
 2. controller 패키지
    - 레벨: INFO
    - 출력 형식: 콘솔, 파일
@@ -34,7 +34,7 @@
    - 패턴: 연-월-일 시:분:초.밀리초(3) 로그레벨(5) [thread이름] 초록색(패키지_제외한_클래스_이름{36}) - 메시지
    - 패턴에 지정한 방식대로 시간과 레벨 등의 설정에 맞춰 콘솔에 메세지 출력
 
-4. logstash에 로그 전달
+4. logstash로 로그 전달
    - 전달 URL: http://localhost:5000
    - 인코딩 형식: json
    - 로그 저장 내용: 추가적으로 application.properties에 정의한 어플리케이션 이름을 추가함
@@ -88,3 +88,25 @@
     "context": "vms"
   }
   ```
+
+<br/>
+<h3>- logstash 사용을 위한 실행 코드</h3>
+
+- Docker를 이용한 ELK Stack 구축
+  - 버전 6 클론
+    ```
+    git clone -b release-6.x --single-branch https://github.com/deviantony/docker-elk.git
+    ```
+  - 빌드 및 실행 (in 백그라운드)
+    ```
+    docker-compose build && docker-compose up -d
+    ```
+  - 종료
+    ```
+    docker-compose down -v
+    ```
+
+  - 키바나에서 확인
+    - URL: http://localhost:5601
+  - 엘라스틱 서치에서 확인
+    - URL: http://localhost:9200/{인덱스명}/_search?pretty
