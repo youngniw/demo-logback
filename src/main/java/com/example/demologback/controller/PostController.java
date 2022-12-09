@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -33,9 +35,13 @@ public class PostController {
     public ResponseEntity<String> addPost(@RequestBody PostDto postDto) {
         log.info("Http Method (POST) - post");
 
-        postService.addPost(postDto);
+        Long postId = postService.addPost(postDto);
 
-        return ResponseEntity.ok("success");
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{postId}")
+                .buildAndExpand(postId)
+                .toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PatchMapping("/{postId}")

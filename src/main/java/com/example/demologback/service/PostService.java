@@ -34,7 +34,7 @@ public class PostService {
     }
 
     @Transactional
-    public boolean addPost(PostDto postDto) {
+    public Long addPost(PostDto postDto) {
         Post post = Post.builder()
                 .writer(Member.builder()
                         .memberId(postDto.getWriterId())
@@ -42,12 +42,9 @@ public class PostService {
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
                 .build();
-        try {
-            postRepository.save(post);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+
+        Post savePost = postRepository.save(post);
+        return savePost.getPostId();
     }
 
     @Transactional
